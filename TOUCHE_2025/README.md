@@ -4,101 +4,65 @@
 <img src="https://github.com/user-attachments/assets/4c167b85-1fb9-4f8d-8ef9-9e0d60cf01c7" width="250" alt="Firma animada">
 <img src="https://github.com/user-attachments/assets/1658fa2f-d8a3-494f-a812-fc33cf471188" width="350" alt="Firma animada">
 
-## Este repositorio presenta una propuesta para la participación del equipo **CEDNAV-UTB**, afiliado al **Centro de Desarrollo Tecnológico Naval** y la **Universidad Tecnológica de Bolívar**, en la tarea "Image Retrieval for Arguments" del desafío [Touché 2025](https://touche.webis.de/clef25/touche25-web/image-retrieval-for-arguments.html).
+## This repository contains the official implementation developed by the UTB–CEDNAV team for the Image Retrieval for Arguments task at [Touché 2025](https://touche.webis.de/clef25/touche25-web/image-retrieval-for-arguments.html). The solution offers a simple, sustainable, and reproducible baseline for matching textual arguments with relevant images using CLIP (ViT-B/32).
 
+## Overview
+The system focuses on retrieving—not generating—images that are semantically aligned with argument claims. It leverages CLIP to compute textual embeddings for both argument claims and image captions, then ranks images by cosine similarity. Unlike many prior approaches, it avoids OCR, re-rankers, or generative models, minimizing technical dependencies and reducing computational load.
 
-
-## 📌 Descripción
-
-El sistema implementa una arquitectura de recuperación de imágenes basada en similitud semántica usando [CLIP (ViT-B/32)](https://openai.com/research/clip). Dado un conjunto de argumentos (claims) y un conjunto de imágenes con captions, el sistema:
-
-1. Embebe los textos de los claims y los captions con CLIP.
-2. Calcula la similitud coseno entre embeddings.
-3. Recupera las 10 imágenes más relevantes por claim.
-4. Genera un archivo `submission.jsonl` con las predicciones, conforme al formato del reto.
-
-Además, se incluye trazabilidad de huella de carbono mediante [CodeCarbon](https://mlco2.github.io/codecarbon/).
-
-
-
-## 📁 Estructura del proyecto
-
+## Key Features
 ```bash
-├── Touché2025_V7.ipynb # Notebook principal con el pipeline completo
-├── /DATASET_TOUCHE_2025 # Carpeta en Google Drive con los datos y embeddings
-│ ├── touche25-image-retrieval-and-generation-main.zip
-│ ├── arguments.xml
-│ ├── claim_embeddings.pt
-│ ├── caption_embeddings.pt
-│ └── submission.jsonl
+🔍 CLIP-based text-to-text retrieval between argument claims and image captions
+⚡ High computational efficiency via parallel processing and embedding reuse
+🌱 Low environmental impact, measured and tracked using CodeCarbon
+🧪 Valid output for the official Touché 2025 validator and format (submission.jsonl)
+☁️ Google Colab-ready for scalable and accessible deployment
+```
+
+## System Highlights
+Dataset: Uses the official Touché 2025 dataset (XML and image-caption pairs)
+Embeddings: Precomputes and reuses CLIP embeddings for both claims and captions
+Similarity Computation: Ranks images per claim using cosine similarity
+Output Format: Produces submission.jsonl compatible with Touché 2025 evaluation tools
+Sustainability: Achieves over 85% reduction in CO₂ emissions in subsequent runs by avoiding redundant computations
+
+## Getting Started
+To replicate the experiments:
+
+1. Clone the repository and open the Colab notebook.
+
+Note: Click the badge below to launch the notebook directly in Google Colab:
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/11HhJJcfZ87bkSmhzJzU32SjK8EbND57D?usp=sharing)
+
+
+3. Mount your Google Drive and ensure it includes:
+  - [Download arguments.xml](https://zenodo.org/records/15123526/files/arguments.xml?download=1)
+  - [Download touche25-image-retrieval-and-generation-main.zip](https://zenodo.org/records/15123526/files/touche25-image-retrieval-and-generation-main.zip?download=1)
+    
+3. Run the pipeline end-to-end:
+  - Extract the dataset
+  - Load and embed captions and claims
+  - Compute similarities and generate the output
+4. Use the official validator to verify the results
+
+## Repository Structure
+```bash
+TOUCHE_2025/
+├── touché2025_v7.py           # Main script with full retrieval pipeline
+├── CEDNAV_UTB_paper.pdf       # Working Notes paper submitted to CLEF 2025
+└── README.md                  # This file
 ```
 
 
-## ⚙️ Requisitos
+## Citation
+- Heinrich, M., Kiesel, J., Wolter, M., Potthast, M., & Stein, B. (2025). Touché-Argument-Images | ImageCLEF / LifeCLEF - Multimedia Retrieval in CLEF [Online]. Available at: https://www.imageclef.org/2025/argument-images (Accessed May 26, 2025)
+- Heinrich, M., Kiesel, J., Wolter, M., Potthast, M., & Stein, B. (2025). Touché25-Image-Retrieval-and-Generation-for-Arguments [Dataset]. Zenodo. https://doi.org/10.5281/zenodo.15123526 (Accessed May 26, 2025)
+- Lacoste, A., Luccioni, S., Schmidt, V., & Dandres, T. (2021). CodeCarbon: Estimate the carbon footprint of your compute usage [Software]. GitHub. https://doi.org/10.5281/zenodo.5105071 (Accessed May 26, 2025)
 
-- Google Colab
-- Python 3.8+
-- PyTorch
-- `open_clip_torch`
-- `codecarbon`
-- `tqdm`
 
-Instalación en Colab:
-
-```bash
-!pip install open_clip_torch codecarbon tqdm
-```
-
-## 🚀 Ejecución
-Montar Google Drive y definir rutas
-
-Descomprimir el dataset si no se ha hecho previamente
-
-Cargar argumentos (arguments.xml)
-
-Cargar captions de las imágenes usando multiprocesamiento
-
-Configurar modelo CLIP (ViT-B/32)
-
-Generar o cargar embeddings de claims y captions
-
-Calcular similitud coseno y recuperar imágenes top-10
-
-Guardar archivo de resultados en formato JSONL
-
-Medir emisiones de carbono con CodeCarbon
-
-## 📤 Formato de salida
-Cada línea del archivo submission.jsonl contiene una predicción:
-
-```bash
-{
-  "argument_id": "001",
-  "method": "retrieval",
-  "image_id": "I1234",
-  "rank": 1,
-  "tag": "CEDNAV-UTB; CLIP_Baseline"
-}
-```
-
-## 📊 Métricas
-La evaluación se realiza mediante nDCG@10 sobre la correspondencia entre imágenes recuperadas y relevancia dada por anotadores humanos
-
-## 🌱 Huella de carbono
-El pipeline registra el impacto ambiental estimado (emisiones de CO₂ en kg) con codecarbon.
-
-## 👥 Equipo
-Nombre del equipo: Computer Vision UTB
-
-Afiliación: CEDNAV
-
-País: Colombia
-
-Contacto: Diego Guevara
-
+## Contact
+Team: Computer Vision UTB
+Affiliation: CEDNAV – Naval Technological Development Center, Colombian Navy
+Country: Colombia
+Contact Person: Diego Guevara
 Email: hiperdaga7@gmail.com
-
-
-## 📝 Licencia
-Este proyecto se distribuye con fines académicos. Revisa las condiciones de uso del dataset Touché 2025 antes de su reutilización.
 
