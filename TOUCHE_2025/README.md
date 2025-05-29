@@ -1,7 +1,7 @@
 # CEDNAV–UTB: Efficient Image Retrieval for Arguments with CLIP
 
-<img src="https://github.com/user-attachments/assets/44305bf0-c24a-4c1d-8f87-852445707970" width="150" alt="Firma animada">
-<img src="https://github.com/user-attachments/assets/4c167b85-1fb9-4f8d-8ef9-9e0d60cf01c7" width="250" alt="Firma animada">
+<img src="https://github.com/user-attachments/assets/44305bf0-c24a-4c1d-8f87-852445707970" width="150" alt="Firma animada">      
+<img src="https://github.com/user-attachments/assets/4c167b85-1fb9-4f8d-8ef9-9e0d60cf01c7" width="250" alt="Firma animada">     
 <img src="https://github.com/user-attachments/assets/1658fa2f-d8a3-494f-a812-fc33cf471188" width="350" alt="Firma animada">
 
 ## This repository contains the official implementation developed by the UTB–CEDNAV team for the Image Retrieval for Arguments task at [Touché 2025](https://touche.webis.de/clef25/touche25-web/image-retrieval-for-arguments.html). The solution offers a simple, sustainable, and reproducible baseline for matching textual arguments with relevant images using CLIP (ViT-B/32).
@@ -49,6 +49,7 @@ Note: Click the badge below to launch the notebook directly in Google Colab:
 TOUCHE_2025/
 ├── touché2025_v7.py           # Main script with full retrieval pipeline
 ├── CEDNAV_UTB_paper.pdf       # Working Notes paper submitted to CLEF 2025
+├── submission.jsonl           # submission
 └── README.md                  # This file
 ```
 
