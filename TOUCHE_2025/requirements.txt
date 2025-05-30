@@ -1,3 +1,4 @@
-torch
-open-clip-torch
-tqdm
+torch>=1.13.0
+open_clip_torch>=2.23.0
+tqdm>=4.66.0
+codecarbon>=2.3.4
